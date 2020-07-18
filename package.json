@@ -1,0 +1,31 @@
+{
+  "name": "meet-addons-sdk",
+  "version": "0.4.791",
+  "description": "SDK for easy creation of addons for meet.rs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "deploy": "npm run build && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meet-rs-api/meet-addon-sdk.git"
+  },
+  "keywords": [
+    "vivani",
+    "meet.rs",
+    "interviews"
+  ],
+  "author": "Vivani doo, Svilajnac",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meet-rs-api/meet-addon-sdk/issues"
+  },
+  "homepage": "https://github.com/meet-rs-api/meet-addon-sdk#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}
