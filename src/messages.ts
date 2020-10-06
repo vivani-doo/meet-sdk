@@ -1,4 +1,4 @@
-import { ConfigurationItem , HostInfo, ParticipantInfo, PrincipalInfo } from './context';
+import { ConfigurationItem , HostInfo, ParticipantInfo, PrincipalInfo, TokenInfo } from './context';
 
 export enum MessageType {
     READY = 'meet-sdk-ready',
@@ -35,7 +35,13 @@ export enum MessageType {
     /**
      * An event sent to addon when addon stops being active by host activating other addon.
      */
-    STATE_INACTIVE = 'meet-addon-inactive'
+    STATE_INACTIVE = 'meet-addon-inactive',
+
+    /**
+     * An event sent to addon when addon needs to start using new Meet API access token.
+     */
+    TOKEN_REFRESH = 'meet-token-refresh'
+
 }
 
 export enum AddonMode {
@@ -425,4 +431,30 @@ export class AddonInactivatedMessage extends AddonMessage {
     }
 
     public activeRoute!: string;
+}
+
+
+
+/**
+ * A messages sent to addon by host when there is new access token 
+ * to be used for accessing Meet API
+ * 
+ * @export
+ * @class TokenRefreshMessage
+
+ * @extends {AddonMessage}
+ */
+export class TokenRefreshMessage extends AddonMessage {
+    
+    /**
+     * Creates an instance of TokenRefreshMessage.
+     * @memberof TokenRefreshMessage
+     */
+    constructor() {
+        super();
+        
+        this.type = MessageType.TOKEN_REFRESH;
+    }
+
+    public token!: TokenInfo;
 }
