@@ -40,7 +40,24 @@ export enum MessageType {
     /**
      * An event sent to addon when addon needs to start using new Meet API access token.
      */
-    TOKEN_REFRESH = 'meet-token-refresh'
+    TOKEN_REFRESH = 'meet-token-refresh',
+    
+    /**
+     * An event sent from addon to host informing it that
+     * it needs to update icon badge adorment text.
+     */
+    BADGE_TEXT_UPDATE = "meet-badge-update",
+    /**
+     * Addon sends this message to host to request from host
+     * to hide pr show the host shell UI elements etc so user can focus on addon
+     * (e.g. Twilio addon before join can request host to hide app bar so user will not be distracted)
+     * (e.g. Twilio addon after user joined the call can request host to show app bar)
+     */
+    HOST_SHELL_REQUEST = "meet-shell-request",
+    /**
+     * Host sends this message to addons every time a key down event is detected
+    */
+    HOST_KEYBOARD_DOWN = "meet-keyboard-down"
 
 }
 
@@ -457,4 +474,64 @@ export class TokenRefreshMessage extends AddonMessage {
     }
 
     public token!: TokenInfo;
+}
+
+/**
+ * A messages sent to addon by host when host inactivate addon.
+ *
+ * @export
+ * @class BadgeUpdateMessage
+ * @extends {AddonMessage}
+ */
+export class BadgeUpdateMessage extends AddonMessage {
+    /**
+     * Creates an instance of BadgeUpdateMessage.
+     * @memberof BadgeUpdateMessage
+     */
+    constructor() {
+        super();
+        this.type == MessageType.BADGE_TEXT_UPDATE;
+    }
+
+    public text: string;
+}
+export declare type ShellState = 'show' | 'hide';
+export class HostShellRequestMessage extends AddonMessage {
+    /**
+     * Creates an instance of HostShellRequestMessage.
+     * @memberof HostShellRequestMessage
+     */
+    constructor() {
+        super();
+        this.type == MessageType.HOST_SHELL_REQUEST;
+    }
+    /**
+     * What is the state of the host addon is  requesting.
+     *
+     * @type {boolean}
+     * @memberof HostShellRequestMessage
+     */
+    public state: ShellState;
+}
+export class KeyDownMessage extends AddonMessage {
+    /**
+     * Creates an instance of KeyDownMessage.
+     * @memberof KeyDownMessage
+     */
+    constructor() {
+        super();
+        this.type == MessageType.HOST_KEYBOARD_DOWN;
+    }
+
+    public altKey: boolean;
+    
+    public ctrlKey: boolean;
+    
+    public keyCode: number;
+    
+    public metaKey: boolean;
+    
+    public shiftKey: boolean;
+    
+    public returnValue: boolean;
 }
