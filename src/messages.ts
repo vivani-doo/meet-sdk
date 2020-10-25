@@ -207,6 +207,10 @@ export interface Dictionary {
  */
 export class AddonMessage {
 
+    constructor (type: MessageType) {
+        this.type = type;
+    }
+
     /**
      * Type of message being sent
      * 
@@ -312,8 +316,7 @@ export class InitMessage extends AddonMessage {
      * @memberof InitMessage
      */
     constructor() {
-        super();
-        this.type = MessageType.INIT;
+        super(MessageType.INIT);
     }
 }
 
@@ -333,9 +336,7 @@ export class ReadyMessage extends AddonMessage {
      * @memberof ReadyMessage
      */
     constructor() {
-        super();
-        
-        this.type = MessageType.READY;
+        super(MessageType.READY);
     }
 }
 
@@ -355,8 +356,7 @@ export class InitRequestMessage extends AddonMessage {
      * @memberof ReadyMessage
      */
     constructor() {
-        super();
-        this.type = MessageType.INIT_REQUESTED;
+        super(MessageType.INIT_REQUESTED);
     }
 }
 
@@ -400,9 +400,7 @@ export class HostChangedMessage extends AddonMessage {
      * @memberof HostChangedMessage
      */
     constructor() {
-        super();
-        
-        this.type = MessageType.HOST_CHANGED;
+        super(MessageType.HOST_CHANGED);
     }
 }
 
@@ -420,9 +418,7 @@ export class AddonActivatedMessage extends AddonMessage {
      * @memberof AddonActivatedMessage
      */
     constructor() {
-        super();
-        
-        this.type = MessageType.STATE_ACTIVE;
+        super(MessageType.STATE_ACTIVE);
     }
 
     public inactiveRoute!: string;
@@ -442,9 +438,7 @@ export class AddonInactivatedMessage extends AddonMessage {
      * @memberof AddonInactivatedMessage
      */
     constructor() {
-        super();
-        
-        this.type = MessageType.STATE_INACTIVE;
+        super(MessageType.STATE_INACTIVE);
     }
 
     public activeRoute!: string;
@@ -468,9 +462,7 @@ export class TokenRefreshMessage extends AddonMessage {
      * @memberof TokenRefreshMessage
      */
     constructor() {
-        super();
-        
-        this.type = MessageType.TOKEN_REFRESH;
+        super(MessageType.TOKEN_REFRESH);
     }
 
     public token!: TokenInfo;
@@ -489,8 +481,7 @@ export class BadgeUpdateMessage extends AddonMessage {
      * @memberof BadgeUpdateMessage
      */
     constructor() {
-        super();
-        this.type == MessageType.BADGE_TEXT_UPDATE;
+        super(MessageType.BADGE_TEXT_UPDATE);
     }
 
     public text: string;
@@ -502,8 +493,7 @@ export class HostShellRequestMessage extends AddonMessage {
      * @memberof HostShellRequestMessage
      */
     constructor() {
-        super();
-        this.type == MessageType.HOST_SHELL_REQUEST;
+        super(MessageType.HOST_SHELL_REQUEST);
     }
     /**
      * What is the state of the host addon is  requesting.
@@ -513,14 +503,14 @@ export class HostShellRequestMessage extends AddonMessage {
      */
     public state: ShellState;
 }
+
 export class KeyDownMessage extends AddonMessage {
     /**
      * Creates an instance of KeyDownMessage.
      * @memberof KeyDownMessage
      */
     constructor() {
-        super();
-        this.type == MessageType.HOST_KEYBOARD_DOWN;
+        super(MessageType.HOST_KEYBOARD_DOWN);
     }
 
     public altKey: boolean;
