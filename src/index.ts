@@ -163,6 +163,7 @@ export class AddonsSdk {
             case MessageType.HOST_SHELL_REQUEST:
             case MessageType.HOST_KEYBOARD_DOWN:                
             case MessageType.TOKEN_REFRESH:
+            case MessageType.HOST_ACTIVATION_REQUEST:
                 if (this.logging <= LogLevel.Trace) {
                     // tslint:disable-next-line: no-console
                     console.log('[SDK][Index]::handleReceivedMessage-switch', hostMessage.type, hostMessage);
@@ -193,9 +194,20 @@ export class AddonsSdk {
     }
 }
 
-// exposing sdk as  a global variable
-const w = window as any;
-w.vivani = w.vivani || {};
-w.vivani.sdk = w.vivani.sdk || new AddonsSdk();
+declare global {
+    interface Window {
+        vivani: {
+            sdk: AddonsSdk;
+      };
+    }
+  }
+  
 
-export default w.vivani.sdk;
+// exposing sdk as  a global variable
+window.vivani = window.vivani || {
+    sdk: new AddonsSdk()
+};
+
+window.vivani.sdk = window.vivani.sdk || new AddonsSdk();
+
+export default window.vivani.sdk;

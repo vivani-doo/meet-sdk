@@ -57,8 +57,13 @@ export enum MessageType {
     /**
      * Host sends this message to addons every time a key down event is detected
     */
-    HOST_KEYBOARD_DOWN = "meet-keyboard-down"
+    HOST_KEYBOARD_DOWN = "meet-keyboard-down",
 
+
+    /**
+     * Addons send the message to the host requesting its mode to be adjusted 
+     */
+    HOST_ACTIVATION_REQUEST= 'meet-host-activate',
 }
 
 export enum AddonMode {
@@ -487,6 +492,7 @@ export class BadgeUpdateMessage extends AddonMessage {
     public text: string;
 }
 export declare type ShellState = 'show' | 'hide';
+
 export class HostShellRequestMessage extends AddonMessage {
     /**
      * Creates an instance of HostShellRequestMessage.
@@ -524,4 +530,22 @@ export class KeyDownMessage extends AddonMessage {
     public shiftKey: boolean;
     
     public returnValue: boolean;
+}
+
+
+/**
+ * Message sent from addon to host requesting to be activated (navigated to focus) 
+ *
+ * @export
+ * @class HostActivationRequestMessage
+ * @extends {AddonMessage}
+ */
+export class HostActivationRequestMessage extends AddonMessage {
+    /**
+     * Creates an instance of HostActivationRequestMessage.
+     * @memberof HostActivationRequestMessage
+     */
+    constructor() {
+        super(MessageType.HOST_ACTIVATION_REQUEST);
+    }
 }
