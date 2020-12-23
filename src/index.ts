@@ -197,17 +197,13 @@ export class AddonsSdk {
 declare global {
     interface Window {
         vivani: {
-            sdk: AddonsSdk;
+            sdk?: AddonsSdk;
       };
     }
-  }
-  
+}
 
 // exposing sdk as  a global variable
-window.vivani = window.vivani || {
-    sdk: new AddonsSdk()
-};
-
+window.vivani = window.vivani || {};
 window.vivani.sdk = window.vivani.sdk || new AddonsSdk();
 
 export default window.vivani.sdk;
