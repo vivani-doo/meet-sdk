@@ -14,7 +14,7 @@ export enum LogLevel {
 
 export class AddonsSdk {
 
-    public logging: LogLevel = LogLevel.Errors;
+    public logLevel: LogLevel = LogLevel.Errors;
 
     public onInit: (context: InitMessage) => void;
 
@@ -33,7 +33,7 @@ export class AddonsSdk {
         this.onInit = this.preprocessInitMessage;
 
         this.onMessage = (_message: AddonMessage) => {
-            if (this.logging <= LogLevel.Trace) {
+            if (this.logLevel >= LogLevel.Trace) {
                 // tslint:disable-next-line: no-console
                 console.log('[SDK][onMessage]-NOP', _message);
             }
@@ -44,7 +44,7 @@ export class AddonsSdk {
             console.error(['[SDK][ErrorHandler]-NOP', _message, _optionalParams]);
         };
 
-        if (this.logging <= LogLevel.Debug) {
+        if (this.logLevel >= LogLevel.Debug) {
             // tslint:disable-next-line: no-console
             console.log('[SDK][Index]::ctor - observing messages: *', postMessage);
         }
@@ -59,7 +59,7 @@ export class AddonsSdk {
      */
     public ready() {
         const postMessage = JSON.stringify(new ReadyMessage());
-        if (this.logging <= LogLevel.Debug) {
+        if (this.logLevel >= LogLevel.Debug) {
             // tslint:disable-next-line: no-console
             console.log('[SDK][Index]::ready - origin: *', postMessage);
         }
@@ -93,7 +93,7 @@ export class AddonsSdk {
 
         const postMessage = JSON.stringify(message);
 
-        if (this.logging <= LogLevel.Debug) {
+        if (this.logLevel >= LogLevel.Debug) {
             // tslint:disable-next-line: no-console
             console.warn('[SDK][Index]::sendMessage', postMessage, this.host.origin);
         }
@@ -103,13 +103,13 @@ export class AddonsSdk {
 
     private handleReceivedMessage = (messageEvent: MessageEvent) => {
         
-        if (this.logging <= LogLevel.Trace) {
+        if (this.logLevel >= LogLevel.Trace) {
             // tslint:disable-next-line: no-console
             console.log('[SDK][Index]::handleReceivedMessage', messageEvent);
         }
         
         if (!messageEvent || messageEvent.source === window || !messageEvent.data || !messageEvent.origin) {
-            if (this.logging <= LogLevel.Trace) {
+            if (this.logLevel >= LogLevel.Trace) {
                 // tslint:disable-next-line: no-console
                 console.warn('[SDK][Index]::handleReceivedMessage-invalid source, data ot origin', messageEvent);
             }
@@ -117,7 +117,7 @@ export class AddonsSdk {
         }
 
         if (this.host && this.host.origin && messageEvent.origin !== this.host.origin) {
-            if (this.logging <= LogLevel.Trace) {
+            if (this.logLevel >= LogLevel.Trace) {
                 // tslint:disable-next-line: no-console
                 console.warn('[SDK][Index]::handleReceivedMessage-invalid message origin', messageEvent);
             }
@@ -125,7 +125,7 @@ export class AddonsSdk {
         }
 
         if (typeof messageEvent.data !== 'string') {
-            if (this.logging <= LogLevel.Trace) {
+            if (this.logLevel >= LogLevel.Trace) {
                 // tslint:disable-next-line: no-console
                 console.warn('[SDK][Index]::handleReceivedMessage - invalid event data', messageEvent.data);
             }
@@ -135,7 +135,7 @@ export class AddonsSdk {
 
         const hostMessage: AddonMessage = JSON.parse(messageEvent.data);
         if (!hostMessage || !hostMessage.type) {
-            if (this.logging <= LogLevel.Trace) {
+            if (this.logLevel >= LogLevel.Trace) {
                 // tslint:disable-next-line: no-console
                 console.warn('[SDK][Index]::handleReceivedMessage-invalid message data', messageEvent);
             }
@@ -164,19 +164,19 @@ export class AddonsSdk {
             case MessageType.HOST_KEYBOARD_DOWN:                
             case MessageType.TOKEN_REFRESH:
             case MessageType.HOST_ACTIVATION_REQUEST:
-                if (this.logging <= LogLevel.Trace) {
+                if (this.logLevel >= LogLevel.Trace) {
                     // tslint:disable-next-line: no-console
                     console.log('[SDK][Index]::handleReceivedMessage-switch', hostMessage.type, hostMessage);
                 }               
                 break;
             default:
-                if (this.logging <= LogLevel.Debug) {
+                if (this.logLevel >= LogLevel.Debug) {
                     this.errorHandler('[AddonsSdk]:onReceived - Unknown host message of type:' + hostMessage.type); 
                 }
                 return;
         }
 
-        if (this.logging <= LogLevel.Trace) {
+        if (this.logLevel >= LogLevel.Trace) {
             // tslint:disable-next-line: no-console
             console.log('[SDK][Index]::handleReceivedMessage-onMessage->', hostMessage);
         }    
@@ -187,7 +187,7 @@ export class AddonsSdk {
     private preprocessInitMessage(context: InitMessage) {
         this.host = context.host;
 
-        if (this.logging <= LogLevel.Trace) {
+        if (this.logLevel >= LogLevel.Trace) {
             // tslint:disable-next-line: no-console
             console.log('[SDK][Index]::preprocessInitMessage-> host', this.host);
         }

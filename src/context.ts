@@ -121,6 +121,22 @@ export class ParticipantInfo extends ParticipantUserInfo {
      * @memberof ParticipantInfo
      */
     public sessionUserRole: string;
+
+    /**
+     * Gets or sets the timestamp when the attendee joined the meeting.
+     *
+     * @type {Date}
+     * @memberof ParticipantInfo
+     */
+    public  joined?: Date;
+
+    /**
+     * Gets or sets the timestamp when the attendee left the meeting.
+     *
+     * @type {Date}
+     * @memberof ParticipantInfo
+     */
+    public  ended?: Date;
 }
 
 export class PrincipalInfo extends ParticipantInfo {

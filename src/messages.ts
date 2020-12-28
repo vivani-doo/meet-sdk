@@ -102,69 +102,23 @@ export enum AppTheme {
 }
 
 /**
- * Structure describing in privacy protecting way
- * addon user who had joined to a meeting session
+ * Structure describing signalR specific
+ * participant information
  *
  * @export
- * @class ParticipantJoinInfo
+ * @class ParticipantHubInfo
  */
-export class ParticipantJoinInfo extends ParticipantInfo {
+export class ParticipantHubInfo extends ParticipantInfo {
 
     /**
      * SignalR hub context user identifier.
      * Needed for sending messages to this specific user.
      *
      * @type {string}
-     * @memberof ParticipantJoinInfo
+     * @memberof ParticipantHubInfo
      */
     public userIdentifier: string;
-}
 
-/**
- * Structure representing the data of the 
- * addon user who had just left the meeting session.
- *
- * @export
- * @class ParticipantLeaveInfo
- */
-export class ParticipantLeaveInfo {
-    
-    /**
-     * Identifier of the addon to which this participant leaving
-     * information is created for.
-     *
-     * @type {string}
-     * @memberof ParticipantLeaveInfo
-     */
-    public addonIdentifier: string;
-
-    /**
-     * Unique has of a meeting session for a given addon session.
-     *
-     * @type {string}
-     * @memberof ParticipantLeaveInfo
-     */
-    public sessionId: string;
-
-    /**
-     * Unique has of a user identifier he has in a given addon session.
-     *
-     * @type {string}
-     * @memberof ParticipantLeaveInfo
-     */
-    public sessionUserId: string;
-
-    /**
-     *
-     * Display name of the session user (if any).
-     *
-     * Display name can be undefined if user choose in 
-     * user privacy settings to not share it with addons.
-     * 
-     * @type {string}
-     * @memberof ParticipantLeaveInfo
-     */
-    public displayName: string;
 }
 
 /**
