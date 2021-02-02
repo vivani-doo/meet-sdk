@@ -165,7 +165,6 @@ export class AddonsSdk {
             case MessageType.TOKEN_REFRESH:
             case MessageType.HOST_ACTIVATION_REQUEST:
             case MessageType.SNAPSHOT_LOAD_REQUEST:
-            case MessageType.SNAPSHOT_SAVE_REQUEST:
                 if (this.logLevel <= LogLevel.Trace) {
                     // tslint:disable-next-line: no-console
                     console.log('[SDK][Index]::handleReceivedMessage-switch', hostMessage.type, hostMessage);
