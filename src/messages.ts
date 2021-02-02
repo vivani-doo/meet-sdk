@@ -64,6 +64,20 @@ export enum MessageType {
      * Addons send the message to the host requesting its mode to be adjusted 
      */
     HOST_ACTIVATION_REQUEST= 'meet-host-activate',
+    
+    /**
+     * Event sent from host to addons requesting them to 
+     * record a snapshot which will be requested in the future
+     * time by host.
+     */
+    SNAPSHOT_SAVE_REQUEST= 'meet-snapshot-save',
+        
+    /**
+     * Event sent from host to addons requesting them to 
+     * load a previously saved snapshot for a given 
+     * snapshot id.
+     */
+    SNAPSHOT_LOAD_REQUEST= 'meet-snapshot-load',
 }
 
 export enum AddonMode {
@@ -502,4 +516,64 @@ export class HostActivationRequestMessage extends AddonMessage {
     constructor() {
         super(MessageType.HOST_ACTIVATION_REQUEST);
     }
+}
+
+/**
+ * Message sent from host to addon requesting a snapshot to be recorded
+ * and stored using the provided snapshotId so it can be later retrieved.
+ *
+ * @export
+ * @class SnapshotSaveMessage
+ * @extends {AddonMessage}
+ */
+export class SnapshotSaveMessage extends AddonMessage {
+
+    /**
+     *Creates an instance of SnapshotRequestManager.
+     * @memberof SnapshotSaveMessage
+     */
+    constructor(snapshotId: string) {
+        super(MessageType.SNAPSHOT_SAVE_REQUEST);
+
+        this.snapshotId = snapshotId;
+    }
+
+    /**
+     * Snapshot identifier to be used by addon host
+     * for persisting the snapshot.
+     *
+     * @type {string}
+     * @memberof SnapshotSaveMessage
+     */
+    public snapshotId!: string;
+}
+
+/**
+ * Event sent from host to addons requesting them to 
+ * load a previously saved snapshot for a given 
+ * snapshot id.
+ *
+ * @export
+ * @class SnapshotLoadMessage
+ * @extends {AddonMessage}
+ */
+export class SnapshotLoadMessage extends AddonMessage {
+
+    /**
+     *Creates an instance of SnapshotLoadMessage.
+     * @memberof SnapshotLoadMessage
+     */
+    constructor() {
+        super(MessageType.SNAPSHOT_LOAD_REQUEST);
+    }
+
+    /**
+     * Snapshot identifier addon host should use 
+     * to intialize addon into the state stored under 
+     * this snapshot id.
+     *
+     * @type {string}
+     * @memberof SnapshotSaveMessage
+     */
+    public snapshotId!: string;
 }
