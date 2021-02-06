@@ -1,7 +1,7 @@
 
 import {  HostInfo } from './context';
 
-import { AddonMessage, InitMessage,  InitRequestMessage, MessageType, ReadyMessage } from './messages';
+import { AddonMessage, InitMessage,  InitRequestMessage, KeyDownMessage, MessageType, ReadyMessage } from './messages';
 
 export * from './context';
 export * from './messages';
@@ -49,6 +49,9 @@ export class AddonsSdk {
             console.log('[SDK][Index]::ctor - observing messages: *', postMessage);
         }
         window.addEventListener('message', this.handleReceivedMessage);
+
+          
+          document.documentElement.addEventListener("keydown", this.handleKeyboardEvent);
     }
     
     /**
@@ -193,6 +196,26 @@ export class AddonsSdk {
             console.log('[SDK][Index]::preprocessInitMessage-> host', this.host);
         }
     }
+
+    
+    private handleKeyboardEvent = (ev: KeyboardEvent) => {
+       
+        const message  = new KeyDownMessage();
+        message.altKey = ev.altKey;
+        message.ctrlKey = ev.ctrlKey;
+        message.keyCode = ev.keyCode;
+        message.metaKey = ev.metaKey;
+        message.shiftKey = ev.shiftKey;
+        message.returnValue = ev.returnValue;
+        
+        if (this.logLevel <= LogLevel.Trace) {
+            // tslint:disable-next-line: no-console
+            console.log("[SDK][Index]::handleKeyboardEvent", { message });
+        }    
+
+        this.sendMessage(message);
+      }
+      
 }
 
 declare global {

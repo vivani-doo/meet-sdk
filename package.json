@@ -1,6 +1,6 @@
 {
   "name": "meet-addons-sdk",
-  "version": "0.4.96",
+  "version": "0.4.97",
   "description": "SDK for easy creation of addons for meet.rs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
