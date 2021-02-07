@@ -18,6 +18,8 @@ export class AddonsSdk {
 
     public onInit: (context: InitMessage) => void;
 
+    public onKeyDown: (keyDownMessage: KeyDownMessage) => void;
+
     public onMessage: (message: AddonMessage) => void;
 
     public errorHandler: (message: string, ...optionalParams: any[]) => void;
@@ -35,23 +37,31 @@ export class AddonsSdk {
         this.onMessage = (_message: AddonMessage) => {
             if (this.logLevel <= LogLevel.Trace) {
                 // tslint:disable-next-line: no-console
-                console.log('[SDK][onMessage]-NOP', _message);
+                console.log('[SDK][onMessage]-NOP', { _message });
             }
         };
 
         this.errorHandler = (_message: string, ..._optionalParams: any[]) => {
             // tslint:disable-next-line: no-console
-            console.error(['[SDK][ErrorHandler]-NOP', _message, _optionalParams]);
+            console.error('[SDK][ErrorHandler]-NOP', { _message, _optionalParams});
         };
+
+        this.onKeyDown = (keyDownMessage: KeyDownMessage) => {
+            // tslint:disable-next-line: no-console
+            if (this.logLevel <= LogLevel.Trace) {
+                console.log('[SDK][onKeyDown]-NOP', { keyDownMessage });
+            }
+        };
+
 
         if (this.logLevel <= LogLevel.Debug) {
             // tslint:disable-next-line: no-console
-            console.log('[SDK][Index]::ctor - observing messages: *', postMessage);
+            console.log('[SDK][Index]::ctor - observing messages: *', { postMessage });
         }
-        window.addEventListener('message', this.handleReceivedMessage);
 
+        window.addEventListener('message', this.handleReceivedMessage);
           
-          document.documentElement.addEventListener("keydown", this.handleKeyboardEvent);
+        document.documentElement.addEventListener("keydown", this.handleKeyboardEvent);
     }
     
     /**
@@ -213,6 +223,8 @@ export class AddonsSdk {
             // tslint:disable-next-line: no-console
             console.log("[SDK][Index]::handleKeyboardEvent", { message });
         }    
+
+        this.onKeyDown(message);
 
         this.sendMessage(message);
       }
